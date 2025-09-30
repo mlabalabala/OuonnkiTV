@@ -57,7 +57,7 @@ fi
 cloudflaredargo
 
 if [ -n "$PROXY_URL" ]; then
-proxychains -f /etc/proxychains.conf node server.mjs;
+proxychains -f /etc/proxychains.conf nginx -g daemon off;
 else
-node server.mjs;
+nginx -g daemon off;
 fi
