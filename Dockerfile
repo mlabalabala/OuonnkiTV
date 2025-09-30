@@ -49,6 +49,12 @@ COPY --from=builder /app/dist /usr/share/nginx/html
 
 # 复制 nginx 配置文件
 COPY nginx.conf /etc/nginx/nginx.conf
+COPY run.sh /app/run.sh
+
+
+# 配置PROXY_URL使容器走代理地址
+RUN apk add --no-cache proxychains-ng
+RUN chmod +x /app/run.sh
 
 # 暴露端口
 EXPOSE 80
@@ -56,4 +62,7 @@ EXPOSE 80
 # 健康检查
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
   CMD wget --no-verbose --tries=1 --spider http://localhost/ || exit 1# 启动 nginx
-CMD ["nginx", "-g", "daemon off;"]
+
+#CMD ["nginx", "-g", "daemon off;"]
+# 设置入口脚本
+ENTRYPOINT ["/app/run.sh"]
