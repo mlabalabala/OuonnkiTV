@@ -57,7 +57,7 @@ fi
 cloudflaredargo
 
 if [ -n "$PROXY_URL" ]; then
-proxychains -f /etc/proxychains.conf nginx -g daemon off;
+proxychains -f /etc/proxychains.conf nginx -g "daemon off;"
 else
-nginx -g daemon off;
+nginx -g "daemon off;"
 fi
